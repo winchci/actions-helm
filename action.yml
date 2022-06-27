@@ -1,0 +1,20 @@
+name: 'Winch Helm'
+description: 'Crank the handle'
+inputs:
+  filename: 
+    description: 'Configuration filename'
+    required: false
+    default: 'winch.yml'
+  command:
+    description: 'Command'
+    required: false
+    default: 'ci'
+runs:
+  using: 'docker'
+  image: "docker://winchci/helm:latest"
+  args:
+    - 'git config --global url."https://$GITHUB_TOKEN:x-oauth-basic@github.com/".insteadOf "https://github.com/"; '
+    - 'winch ${{ inputs.command }} -f ${{ inputs.filename }}'
+branding:
+  icon: 'anchor'
+  color: 'purple'
